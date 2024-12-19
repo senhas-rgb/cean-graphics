@@ -10,16 +10,18 @@ float BallY = 300;
 float BallX = 300;
 int speed = 3;
 
+
 int main() {
 	int timer = 0;
 	std::string welcome = "Hello, brave adventurer!\nWelcome to the world of CEAN";
 	Font font = GetFontDefault();
 
-	// function calls
-	InitAll();
-	backgroundMusic();
+	InitWindow(600, 600, "Sigma window");
+	SetTargetFPS(60);
 
-	while(WindowShouldClose() == false){
+	
+
+	while(WindowShouldClose() == false) {
 		borders(BallY, BallX);
 		keyboard(BallX, BallY, speed);
 		BeginDrawing();
@@ -31,6 +33,6 @@ int main() {
 		EndDrawing();
 		timer++;
 	}
-	Clean();
+	CloseWindow();
 	return 0;
 }

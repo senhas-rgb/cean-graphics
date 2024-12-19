@@ -10,12 +10,6 @@ void textPrint(const std::string& Text, const Vector2 &position, int fontSize, c
 }
 
 void InitAll(){
-    InitAudio();
     SetTargetFPS(fps);
     InitWindow(600, 600, "Sigma raylib window");
-}
-
-void Clean(){
-    ExitAudio();
-    CloseWindow();
 }

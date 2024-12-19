@@ -5,6 +5,6 @@
 
 void textPrint(const std::string& Text, const Vector2 &position, int fontSize, const Color &color, const Font &font, float spacing);
 void InitAll();
-void Clean();
+void Clean(Sound music, Sound hit);
 
 #endif
