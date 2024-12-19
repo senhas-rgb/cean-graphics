@@ -1,14 +1,39 @@
+# Compiler settings
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -I utils/
-LDFLAGS = -ldl -lraylib -lm -lpthread
+CXXFLAGS = -Wall -Wextra -std=c++17 -I.
 
-SRC = $(/*.cpp) $(utils/*.cpp)  # Collect all .cpp files recursively
-OUT = sigma
+# Raylib settings
+RAYLIB_LIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 
-all: $(OUT)
+# Directories
+SRC_DIR = .
+OBJ_DIR = obj
+BIN_DIR = bin
 
-$(OUT): $(SRC)
-	$(CXX) $(SRC) $(CXXFLAGS) $(LDFLAGS) -o $(OUT)
+# Project files
+SRCS = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/utils/*.cpp)
+OBJS = $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(notdir $(SRCS)))
+TARGET = $(BIN_DIR)/game
 
+# Build rules
+all: $(TARGET)
+
+# Link object files to create the executable
+$(TARGET): $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(OBJS) -o $(TARGET) $(RAYLIB_LIBS) $(CXXFLAGS)
+
+# Compile .cpp files to .o files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/utils/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean up
 clean:
-	rm -f $(OUT)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
+
+.PHONY: all clean
